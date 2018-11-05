@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { MOCK_DATA } from '../reducers/mockData';
 
+export const UPDATE_ATOM = 'UPDATE_ATOM';
+export const UPDATED_ATOM = 'UPDATED_ATOM';
 export const FETCHING_ITEMS = 'FETCHING_ITEMS';
 export const FETCHED_ITEMS = 'FETCHED_ITEM';
 export const ADDING_ITEM = 'ADDING_ITEM';
@@ -27,6 +29,30 @@ const errorAction = (error) => {
   return {
     type: ERROR,
     message: error.message,
+  };
+};
+
+export const updateAtomInfo = (event) => {
+  event.stopPropagation();
+
+  const { id, value } = event.target;
+  const details = id.split('-');
+  const index = details[2];
+  const axis = details[0];
+
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_ATOM,
+      data: { index, axis, value },
+    });
+  };
+};
+
+export const updatedAtom = () => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATED_ATOM,
+    });
   };
 };
 
