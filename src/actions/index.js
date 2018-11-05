@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MOCK_DATA } from '../reducers/mockData';
 
 export const FETCHING_ITEMS = 'FETCHING_ITEMS';
 export const FETCHED_ITEMS = 'FETCHED_ITEM';
@@ -18,9 +19,10 @@ export const LOG_IN_USER_ERROR = 'LOG_IN_USER_ERROR';
 export const AUTH_USER = 'AUTH_USER';
 export const LOG_OUT_USER = 'LOG_OUT_USER';
 
-const URL = process.env.REACT_APP_API_NOTES;
+const URL = process.env.REACT_APP_API;
 const URL_REGISTER = process.env.REACT_APP_API_REGISTER;
 const URL_LOGIN = process.env.REACT_APP_API_LOGIN;
+
 const errorAction = (error) => {
   return {
     type: ERROR,
@@ -29,6 +31,14 @@ const errorAction = (error) => {
 };
 
 export const fetchingItems = () => {
+  if (!URL)
+    return (dispatch) => {
+      dispatch({
+        type: FETCHED_ITEMS,
+        data: MOCK_DATA,
+      });
+    };
+
   const fetch = axios.get(URL);
   return (dispatch) => {
     dispatch({
@@ -36,10 +46,10 @@ export const fetchingItems = () => {
     });
     fetch
       .then((response) => {
-        console.log('response.data', response.data);
+        // console.log('response.data', response.data);
         dispatch({
           type: FETCHED_ITEMS,
-          data: response.data['Document(s) in database'],
+          data: response.data,
         });
       })
       .catch((e) => {
@@ -59,12 +69,12 @@ export const addingItem = (newItem) => {
     addItem
       .then((response) => {
         console.log('POST response.data', response.data);
-        console.log(response.data['Document(s) created']);
+        console.log(response.data);
         // console.log("newItem", newItem);
         dispatch({
           type: ADDED_ITEM,
           allItems: response.data,
-          newItem: response.data['Document(s) created'],
+          newItem: response.data,
         });
       })
       .catch((e) => {
