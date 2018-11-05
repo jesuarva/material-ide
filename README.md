@@ -2,9 +2,12 @@
 
 This is a starting approach for 'Material Designer' problem, stated in [_Exabyte-io/rewotes_](https://github.com/exabyte-io/rewotes)
 
+The APP is prepared to make an HTTP request to an API which serve the required materials data.
+Due to the fact that there is not yet an API url defined, the APP then renders a mockData.js file.
+
 # Functionalities
 
-Users can be able to update the graphical view as they type in the <imput> fields on the left panel.
+Users can be able to update the graphical view as they the data in the `input` fields of the left panel.
 
 ## @todo
 
