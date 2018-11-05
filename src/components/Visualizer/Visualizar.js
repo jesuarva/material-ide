@@ -5,20 +5,31 @@ import pointImg from '../../media/disc.png';
 
 class Visualizer extends Component {
   componentDidMount() {
-    // console.log(this.props.newMaterial);
+    this.init();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.init();
+  }
+
+  componentWillUnmount() {
+    this.stop();
+    this.mount.removeChild(this.renderer.domElement);
+  }
+
+  init() {
     const { spaceDistribution, numberOfAtoms } = this.props.newMaterial;
 
     const width = this.mount.clientWidth;
-    const height = this.mount.clientHeight;
+    const height = window.innerHeight;
 
     //ADD SCENE
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xf0f0f0);
 
     //ADD CAMERA
-    this.camera = new THREE.PerspectiveCamera(70, width / height, 2, 2000);
-    this.camera.position.z = 10;
-
+    this.camera = new THREE.PerspectiveCamera(100, width / height, 2, 2000);
+    this.camera.position.z = 30;
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -54,7 +65,7 @@ class Visualizer extends Component {
     // Generate an array with all the x-y-z coordinates
     const vertices = spaceDistribution.reduce((control, vertex) => {
       const { x, y, z } = vertex;
-      control.push(x, y, z);
+      control.push(Number(x), Number(y), Number(z));
       // console.log(vertex, control);
       return control;
     }, []);
@@ -78,10 +89,7 @@ class Visualizer extends Component {
 
     this.start();
   }
-  componentWillUnmount() {
-    this.stop();
-    this.mount.removeChild(this.renderer.domElement);
-  }
+
   start = () => {
     if (!this.frameId) {
       this.frameId = requestAnimationFrame(this.animate);
@@ -100,8 +108,12 @@ class Visualizer extends Component {
     this.renderer.render(this.scene, this.camera);
   };
   render() {
+    const { atomUpdated } = this.props;
+    console.log(atomUpdated);
+
     return (
       <div
+        key={`store-updated-${atomUpdated}`}
         style={{ width: '100%', height: '100%' }}
         ref={(mount) => {
           this.mount = mount;
@@ -114,6 +126,7 @@ class Visualizer extends Component {
 const mapStateToProps = (state) => {
   return {
     newMaterial: state.data[state.picked_material], // get current selected material.
+    atomUpdated: state.atomUpdated,
   };
 };
 
