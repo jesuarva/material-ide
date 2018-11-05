@@ -1,4 +1,6 @@
 import {
+  UPDATE_ATOM,
+  UPDATED_ATOM,
   FETCHING_ITEMS,
   FETCHED_ITEMS,
   ADDING_ITEM,
@@ -22,6 +24,27 @@ import { INITIAL_STATE } from './initialState';
 
 const mainReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case UPDATE_ATOM:
+      const { index, axis, value } = action.data;
+      const current = state.data[state.picked_material];
+      const atomsList = [...current.spaceDistribution];
+      atomsList[index][axis] = value;
+
+      return {
+        ...state,
+        atomUpdated: !state.atomUpdated,
+        data: {
+          ...state.data,
+          [state.picked_material]: Object.assign(current, {
+            spaceDistribution: atomsList,
+          }),
+        },
+      };
+    case UPDATED_ATOM:
+      return {
+        ...state,
+        atomUpdated: !state.atomUpdated,
+      };
     case FETCHING_ITEMS:
       return {
         ...state,
@@ -66,7 +89,7 @@ const mainReducer = (state = INITIAL_STATE, action) => {
     case UPDATED_ITEM:
       console.log('REDUCER UPDATED_ITEM: action.content', action.content);
       console.log('REDUCER UPDATED_ITEM: action.allItems', action.allItems);
-      const index = Number(action.index);
+      const indx = Number(action.index);
       console.log(
         'REDUCER UPDATED_ITEM: action.index',
         index,
@@ -100,7 +123,7 @@ const mainReducer = (state = INITIAL_STATE, action) => {
         // data: Object.assign([...state.data], { [index]: action.content })
         /** 3.2 */
         data: Object.assign([...state.data], {
-          [index]: Object.assign({}, state.data[index], action.content),
+          [indx]: Object.assign({}, state.data[index], action.content),
         }),
       };
     case DELETING_ITEM:
