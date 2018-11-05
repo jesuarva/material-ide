@@ -1,3 +1,9 @@
-export const O = 'O';
+export const O = {
+  symbol: 'O',
+  color: '#00FFFF',
+};
 
-export const Al = 'Al';
+export const Al = {
+  symbol: 'Al',
+  color: '#C0C0C0',
+};
