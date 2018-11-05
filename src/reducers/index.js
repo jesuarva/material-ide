@@ -18,26 +18,9 @@ import {
   LOG_OUT_USER,
 } from '../actions';
 
-const initialState = {
-  data: [],
-  user: {},
-  creating_user: false,
-  created_user: false,
-  loggin_in_user: false,
-  logged_in_user: false,
-  authUser: false,
-  fetching_Items: false,
-  fetched_Item: false,
-  adding_Item: false,
-  added_Item: false,
-  updating_Item: false,
-  updated_Item: false,
-  deleting_Item: false,
-  deleted_Item: false,
-  error: null,
-};
+import { INITIAL_STATE } from './initialState';
 
-const mainReducer = (state = initialState, action) => {
+const mainReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCHING_ITEMS:
       return {
