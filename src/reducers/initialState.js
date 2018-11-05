@@ -1,6 +1,7 @@
 export const INITIAL_STATE = {
   data: {},
   user: {},
+  picked_material: 'aluminium_oxide',
   creating_user: false,
   created_user: false,
   loggin_in_user: false,
