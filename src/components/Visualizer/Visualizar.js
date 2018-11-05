@@ -28,8 +28,8 @@ class Visualizer extends Component {
     this.scene.background = new THREE.Color(0xf0f0f0);
 
     //ADD CAMERA
-    this.camera = new THREE.PerspectiveCamera(100, width / height, 2, 2000);
-    this.camera.position.z = 30;
+    this.camera = new THREE.PerspectiveCamera(100, width / height, 1, 0);
+    this.camera.position.z = 5;
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -76,7 +76,7 @@ class Visualizer extends Component {
     );
 
     const pointMaterial = new THREE.PointsMaterial({
-      size: 1.5,
+      size: 0.7,
       sizeAttenuation: true,
       map: pointSprite,
       alphaTest: 0.5,
@@ -99,8 +99,8 @@ class Visualizer extends Component {
     cancelAnimationFrame(this.frameId);
   };
   animate = () => {
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.01;
+    // this.atomsToDraw.rotation.x += 0.01;
+    // this.atomsToDraw.rotation.y += 0.01;
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
   };
@@ -109,7 +109,6 @@ class Visualizer extends Component {
   };
   render() {
     const { atomUpdated } = this.props;
-    console.log(atomUpdated);
 
     return (
       <div

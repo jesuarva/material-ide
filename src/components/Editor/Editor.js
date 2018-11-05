@@ -17,7 +17,7 @@ const Editor = ({ materialName, newMaterial, updatedAtom }) => {
   return (
     <div className="editor d-flex flex-column justify-content-between">
       <div>{materialName}</div>
-      <div>other details</div>
+      {/* <div>other details</div> */}
       <div style={{ height: window.innerHeight }} className="editor">
         {atomsForm}
       </div>
